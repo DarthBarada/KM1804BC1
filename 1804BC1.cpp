@@ -1,19 +1,19 @@
-// 1804BC1.cpp: определяет экспортированные функции для приложения DLL.
+// 1804BC1.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ СЌРєСЃРїРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Рµ С„СѓРЅРєС†РёРё РґР»СЏ РїСЂРёР»РѕР¶РµРЅРёСЏ DLL.
 //
 
 #include "stdafx.h"
-#include "vsm.h"    // - заголовочный файл VSM API от Labcenter Electronics.
-#include "MTDEVICE.h" //-заголовочный файл для реализации класса нашей модели.
+#include "vsm.h"    // - Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹Р№ С„Р°Р№Р» VSM API РѕС‚ Labcenter Electronics.
+#include "MTDEVICE.h" //-Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹Р№ С„Р°Р№Р» РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё РєР»Р°СЃСЃР° РЅР°С€РµР№ РјРѕРґРµР»Рё.
 
 //---------------------------------------------------------------------------
-#define model_key 0x00000000 // - код авторизации от Labcenter Electronics
+#define model_key 0x00000000 // - РєРѕРґ Р°РІС‚РѕСЂРёР·Р°С†РёРё РѕС‚ Labcenter Electronics
 //---------------------------------------------------------------------------
 
 extern "C" IDSIMMODEL __declspec(dllexport) *createdsimmodel(CHAR *device, ILICENCESERVER *ils)
 {
 	if (ils->authorize(model_key))
 	{
-		return new MTDEVICE; // - указатель на класс модели FFDEVICE
+		return new MTDEVICE; // - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ РјРѕРґРµР»Рё FFDEVICE
 	}
 	else
 	{
@@ -23,8 +23,8 @@ extern "C" IDSIMMODEL __declspec(dllexport) *createdsimmodel(CHAR *device, ILICE
 
 extern "C" VOID __declspec(dllexport) deletedsimmodel(IDSIMMODEL *model)
 {
-	delete (MTDEVICE *)model; // - указатель на IDSIMMODEL интерфейс, который был ранее
-	// - создан функцией createdsimmodel.
+	delete (MTDEVICE *)model; // - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° IDSIMMODEL РёРЅС‚РµСЂС„РµР№СЃ, РєРѕС‚РѕСЂС‹Р№ Р±С‹Р» СЂР°РЅРµРµ
+	// - СЃРѕР·РґР°РЅ С„СѓРЅРєС†РёРµР№ createdsimmodel.
 }
 
 

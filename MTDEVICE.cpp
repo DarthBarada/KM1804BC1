@@ -1,6 +1,6 @@
 //------- MTDEVICE.CPP ---------------------------------------------------------------
 #include "stdafx.h"
-#include "MTDEVICE.h" //- заголовочный файл для реализации класса нашей модели.
+#include "MTDEVICE.h" //- Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹Р№ С„Р°Р№Р» РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё РєР»Р°СЃСЃР° РЅР°С€РµР№ РјРѕРґРµР»Рё.
 //------------------------------------------------------------------------------------
 
 #define WORD_SIZE 4
@@ -117,7 +117,7 @@ VOID MTDEVICE::runctrl(RUNMODES mode)
 //---- DEVICE::actuate ------------------------------------------------------------------
 VOID MTDEVICE::actuate(REALTIME time, ACTIVESTATE newstate)
 	{
-		//---- анализируется состояние (ACTIVESTATE newstate)
+		//---- Р°РЅР°Р»РёР·РёСЂСѓРµС‚СЃСЏ СЃРѕСЃС‚РѕСЏРЅРёРµ (ACTIVESTATE newstate)
 	}
 
 //---- DEVICE::indicate ------------------------------------------------------------------
@@ -147,7 +147,7 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 				int R = 0;
 				int S = 0;
 				
-				// Выбор источника операндов
+				// Р’С‹Р±РѕСЂ РёСЃС‚РѕС‡РЅРёРєР° РѕРїРµСЂР°РЅРґРѕРІ
 				switch (I20) 
 					{
 						case 0u:
@@ -207,10 +207,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 					{
 						case 0:					// F = R + S + CO
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = R + S + C0;
 							
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = !p30;
 
 								bool g1 = IsBitSet(g, 1) || (IsBitSet(p, 1) && IsBitSet(g, 0));
@@ -229,10 +229,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 1:					// F = S - R - 1 + CO
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = S + Mask(~R) + C0;	
 							
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = !p30;
 
 								bool g1 = IsBitSet(g, 1) || (IsBitSet(p, 1) && IsBitSet(g, 0));
@@ -251,10 +251,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 2:					// F = R - S - 1 + CO
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = R + Mask(~S) + C0;
 							
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = !p30;
 
 								bool g1 = IsBitSet(g, 1) || (IsBitSet(p, 1) && IsBitSet(g, 0));
@@ -273,10 +273,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 3:					// F = R or S 
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = R | S;
 							
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = false;
 								_G = p30;
 								_C4 = !p30 || C0;
@@ -285,10 +285,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 4:					// F = R and S 
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = R & S;
 
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = false;
 								_G = !g30;
 								_C4 = g30 || C0;
@@ -297,10 +297,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 5:					// F = not R and S
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = Mask(~R) & S;
 
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = false;
 								_G = !g30;
 								_C4 = g30 || C0;
@@ -309,10 +309,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 6:					// F = R xor S
 							{						
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = R ^ S;
 
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = g30;
 
 								bool g_1 = IsBitSet(g, 1) || (IsBitSet(p, 1) && IsBitSet(p, 0));
@@ -336,10 +336,10 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							}
 						case 7:					// F = not(R xor S)
 							{
-								// Вычисляем функцию
+								// Р’С‹С‡РёСЃР»СЏРµРј С„СѓРЅРєС†РёСЋ
 								_F = Mask(~(R ^ S));
 
-								// Вычисляем флаги
+								// Р’С‹С‡РёСЃР»СЏРµРј С„Р»Р°РіРё
 								_P = g30;
 
 								bool g_1 = IsBitSet(g, 1) || (IsBitSet(p, 1) && IsBitSet(p, 0));
