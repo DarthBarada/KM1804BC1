@@ -139,10 +139,13 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 				int I53 = TO_INT(Pin_27, Pin_28, Pin_26);
 				int I86 = TO_INT(Pin_6, Pin_7, Pin_5);
 
-				bool C0 = ishigh(Pin_29->istate());
+				int PR3 = static_cast<int>(ishigh(Pin_8->istate()));
+				int PR0 = static_cast<int>(ishigh(Pin_9->istate()));
 
-				bool M0 = ishigh(Pin_29->istate());
-				bool M1 = ishigh(Pin_29->istate());
+				int PQ3 = static_cast<int>(ishigh(Pin_16->istate()));
+				int PQ0 = static_cast<int>(ishigh(Pin_21->istate()));
+
+				bool C0 = ishigh(Pin_29->istate());
 
 				int R = 0;
 				int S = 0;
@@ -378,25 +381,37 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 							POH[B] = _F;
 							break;
 						case 4:			// POH(B) = F/2, PQ = Q/2, Y = F
-							PQ = PQ >> 1;
-							POH[B] = _F >> 1;
+							// Во время сдвига в сторону младших разрядов ... 
+							PQ0 = GetBit(PQ, 0);							// PQO является выходом.
+							PQ = PQ >> 1; 					
+							PQ = PQ + (PQ3 << (WORD_SIZE - 1)); 			// PQ3 является входом.
+							PR0 = GetBit(_F, 0);							// PR0 является выходом.
+							POH[B] = (_F >> 1) + (PR3 << (WORD_SIZE - 1));	// PR3 является входом.
 							break;
 						case 5:			// POH(B) = F/2, Y = F 
-							POH[B] = _F >> 1;
+							PQ0 = GetBit(PQ, 0);							// PQO является выходом.
+							PR0 = GetBit(_F, 0);							// PR0 является выходом.
+							POH[B] = (_F >> 1) + (PR3 << (WORD_SIZE - 1));	// PR3 является входом.
 							break;
 						case 6:			// POH(B) = 2F, PQ = 2Q, Y = F
-							PQ = Mask(PQ << 1);
-							POH[B] = Mask(_F << 1);
+							// Во время сдвига в сторону старших разрядов ... 
+							PQ3 = GetBit(PQ, 3);							// PQ3 является выходом.
+							PQ = Mask(PQ << 1) + PQ0;						// PQO является входом.
+							PR3  = GetBit(_F, 3);							// PR3 является выходом.
+							POH[B] = Mask(_F << 1) + PR0;					// PR0 является входом.
 							break;
 						case 7:			// POH(B) = 2F, Y = F
-							POH[B] = Mask(_F << 1);
+							PQ3 = GetBit(PQ, 3);							// PQ3 является выходом.
+							PR3  = GetBit(_F, 3);							// PR3 является выходом.
+							POH[B] = Mask(_F << 1) + PR0;					// PR0 является входом.
 							break;
 					}
 				if(I86 == 2)
 					_Y = POH[A];
 				else
 					_Y = _F;
-
+				
+				// Выводим полученные значения
 				Pin_11->setstate(time, 1, _Z ? SHI : SLO);
 				Pin_31->setstate(time, 1, _F3 ? SHI : SLO);
 				Pin_34->setstate(time, 1, _OVR ? SHI : SLO);
@@ -409,6 +424,12 @@ VOID MTDEVICE::simulate(ABSTIME time, DSIMMODES mode)
 				Pin_37->setstate(time, 1, IsBitSet(_Y, 1) ? SHI : SLO);
 				Pin_38->setstate(time, 1, IsBitSet(_Y, 2) ? SHI : SLO);
 				Pin_39->setstate(time, 1, IsBitSet(_Y, 3) ? SHI : SLO);
+
+				Pin_8->setstate(time, 1, IsBitSet(PR3, 0) ? SHI : SLO);
+				Pin_9->setstate(time, 1, IsBitSet(PR0, 0) ? SHI : SLO);
+
+				Pin_16->setstate(time, 1, IsBitSet(PQ3, 0) ? SHI : SLO);
+				Pin_21->setstate(time, 1, IsBitSet(PQ0, 0) ? SHI : SLO);
 			}
 	}
 

@@ -67,12 +67,12 @@ class MTDEVICE : public IDSIMMODEL
 
 		IDSIMPIN *Pin_35;	// Генерация переноса в АЛУ (G)
 		IDSIMPIN *Pin_32;	// Распространение переноса АЛУ (P)
-		// Остальное (пока не работает)
+		// Остальное
 		IDSIMPIN *Pin_8;	// Двунаправленный вывод сдвига старшего разряда РЗУ (PR3)
 		IDSIMPIN *Pin_9;	// Двунаправленный вывод сдвига младшего разряда РЗУ (PR0)
 
 		IDSIMPIN *Pin_16;	// Двунаправленный вывод сдвига старшего разряда регистра Q (PQ3)
-		IDSIMPIN *Pin_21;	// Двунаправленный вывод сдвига старшего разряда регистра Q (PQ0)
+		IDSIMPIN *Pin_21;	// Двунаправленный вывод сдвига младшего разряда регистра Q (PQ0)
 
 		int TO_INT(IDSIMPIN * p8, IDSIMPIN *p4, IDSIMPIN *p2, IDSIMPIN *p1);
 		int TO_INT(IDSIMPIN *p4, IDSIMPIN *p2, IDSIMPIN *p1);
